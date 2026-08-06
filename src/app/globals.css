@@ -92,3 +92,17 @@ select {
     opacity: 1;
   }
 }
+
+.result-pagination .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  margin: 0 !important;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.45);
+  opacity: 1;
+}
+
+.result-pagination .swiper-pagination-bullet-active {
+  background: #fff;
+  width: 24px;
+}

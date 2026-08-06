@@ -3,9 +3,32 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import type { Swiper as SwiperType } from "swiper";
+import { Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import "swiper/css";
+import "swiper/css/pagination";
+
+const REPORTS = [
+  {
+    id: "drdt",
+    src: "/images/DRDT.jpg",
+    alt: "DRDT scalp and hair analysis report",
+    downloadName: "dse-report-DRDT.jpg",
+  },
+  {
+    id: "osdt",
+    src: "/images/OSDT.jpg",
+    alt: "OSDT scalp and hair analysis report",
+    downloadName: "dse-report-OSDT.jpg",
+  },
+] as const;
 
 export function ResultScreen() {
+  const [activeIndex, setActiveIndex] = useState(0);
   const [zoomed, setZoomed] = useState(false);
+  const activeReport = REPORTS[activeIndex] ?? REPORTS[0];
 
   return (
     <div className="relative min-h-dvh w-full overflow-x-hidden">
@@ -53,21 +76,42 @@ export function ResultScreen() {
             </span>
           </button>
 
-          <button
-            type="button"
-            onClick={() => setZoomed(true)}
-            className="mt-6 w-full max-w-[428px] overflow-hidden rounded-sm shadow-[0_20px_60px_rgba(0,0,0,0.25)] transition hover:scale-[1.01] sm:mt-8"
-            aria-label="Open report preview"
-          >
-            <Image
-              src="/images/result.png"
-              alt="Scalp and hair type analysis report"
-              width={856}
-              height={1284}
-              priority
-              className="h-auto w-full"
-            />
-          </button>
+          <div className="relative mt-6 w-full max-w-[471px] sm:mt-8">
+            <Swiper
+              modules={[Pagination]}
+              slidesPerView={1}
+              spaceBetween={16}
+              pagination={{
+                el: ".result-pagination",
+                clickable: true,
+              }}
+              onSwiper={(swiper: SwiperType) => setActiveIndex(swiper.activeIndex)}
+              onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+              className="result-swiper w-full overflow-visible"
+            >
+              {REPORTS.map((report, index) => (
+                <SwiperSlide key={report.id}>
+                  <button
+                    type="button"
+                    onClick={() => setZoomed(true)}
+                    className="w-full overflow-hidden rounded-sm shadow-[0_20px_60px_rgba(0,0,0,0.25)] transition hover:scale-[1.01]"
+                    aria-label={`Open ${report.id.toUpperCase()} report preview`}
+                  >
+                    <Image
+                      src={report.src}
+                      alt={report.alt}
+                      width={856}
+                      height={1284}
+                      priority={index === 0}
+                      className="h-auto w-full"
+                    />
+                  </button>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            <div className="result-pagination mt-4 flex items-center justify-center gap-2" />
+          </div>
         </section>
 
         <div className="mx-auto mt-8 flex w-full max-w-[734px] flex-col gap-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:mt-10 sm:flex-row sm:gap-4 md:mt-12">
@@ -78,8 +122,8 @@ export function ResultScreen() {
             Back to Home
           </Link>
           <a
-            href="/images/result.png"
-            download="dse-analysis-report.png"
+            href={activeReport.src}
+            download={activeReport.downloadName}
             className="flex h-[64px] flex-1 items-center justify-center rounded-full border-2 border-white/30 bg-white text-[18px] font-medium text-[#4f9fa6] transition hover:bg-white/90 sm:h-[80px] sm:text-[24px] md:h-[106px] md:text-[32px]"
           >
             Download
@@ -103,8 +147,8 @@ export function ResultScreen() {
             Close
           </button>
           <Image
-            src="/images/result.png"
-            alt="Scalp and hair type analysis report close-up"
+            src={activeReport.src}
+            alt={`${activeReport.alt} close-up`}
             width={1200}
             height={1800}
             className="max-h-[90dvh] w-auto max-w-full object-contain"
