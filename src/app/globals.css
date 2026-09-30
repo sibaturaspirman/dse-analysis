@@ -26,7 +26,7 @@ body {
 
 body {
   margin: 0;
-  background: var(--background);
+  background: transparent;
   color: var(--foreground);
   font-family: var(--font-dm-sans), system-ui, sans-serif;
 }
@@ -34,6 +34,80 @@ body {
 select {
   appearance: none;
   background-image: none;
+}
+
+/* Fluid type: Figma sizes land at 800px, then stop growing. */
+.type-display {
+  font-size: clamp(2.15rem, 1.45rem + 4.1vw, 3.5rem);
+  line-height: 1.17;
+}
+
+.type-headline {
+  font-size: clamp(1.85rem, 1.25rem + 3.5vw, 3rem);
+  line-height: 1.25;
+}
+
+.type-page {
+  font-size: clamp(1.6rem, 1.04rem + 2.9vw, 2.5rem);
+  line-height: 1.15;
+}
+
+.type-title {
+  font-size: clamp(1.35rem, 1.15rem + 1.95vw, 2.125rem);
+  line-height: 1.18;
+}
+
+.type-lead {
+  font-size: clamp(1.15rem, 0.8rem + 2.4vw, 2rem);
+  line-height: 1.25;
+}
+
+.type-body {
+  font-size: clamp(0.95rem, 0.64rem + 1.7vw, 1.5rem);
+  line-height: 1.35;
+}
+
+.type-label {
+  font-size: clamp(0.95rem, 0.64rem + 1.7vw, 1.5rem);
+  line-height: 1.35;
+}
+
+.type-chip {
+  font-size: clamp(0.8125rem, 0.28rem + 2.44vw, 1.5rem);
+  line-height: 1;
+  padding: clamp(0.5rem, 3vw, 1.5rem) clamp(0.55rem, 3vw, 1.5rem);
+}
+
+.type-dial {
+  font-size: clamp(0.7rem, 0.39rem + 1.46vw, 1.125rem);
+  line-height: 1.15;
+  max-width: clamp(4.5rem, 3rem + 4vw, 7.5rem);
+}
+
+.type-meta {
+  font-size: clamp(0.75rem, 0.58rem + 0.5vw, 0.95rem);
+  line-height: 1.2;
+}
+
+.type-toggle {
+  font-size: clamp(0.875rem, 0.52rem + 1.95vw, 1.5rem);
+  line-height: 1.2;
+}
+
+.btn-cta {
+  height: clamp(3.5rem, 0.65rem + 11.7vw, 6.625rem);
+  font-size: clamp(1.125rem, 0.55rem + 3.4vw, 2.25rem);
+}
+
+.field-pill {
+  height: clamp(3.5rem, 1.6rem + 7.8vw, 5.5rem);
+  font-size: clamp(1.05rem, 0.3rem + 3.4vw, 2rem);
+  padding-inline: clamp(1rem, 0.35rem + 2.6vw, 2rem);
+}
+
+.logo-mark {
+  height: clamp(1.75rem, 1.16rem + 2.9vw, 2.625rem);
+  width: auto;
 }
 
 .hair-swiper {
@@ -90,6 +164,32 @@ select {
   }
   40% {
     opacity: 1;
+  }
+}
+
+/* Scan Variant3 — light band sweeps the inner square (Figma 7144:7312) */
+@keyframes scan-line-sweep {
+  0% {
+    transform: translateY(-133%);
+  }
+  100% {
+    transform: translateY(133%);
+  }
+}
+
+.scan-overlay .scan-line {
+  animation: scan-line-sweep 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
+}
+
+[data-active="false"] .scan-overlay .scan-line {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scan-overlay .scan-line {
+    animation: none !important;
+    display: none;
   }
 }
 

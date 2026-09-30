@@ -3,131 +3,147 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import type { Swiper as SwiperType } from "swiper";
-import { Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 
-import "swiper/css";
-import "swiper/css/pagination";
+import { useLocale } from "@/components/i18n/locale-context";
+import { AppHeader } from "@/components/layout/app-header";
 
-const REPORTS = [
-  {
-    id: "drdt",
+const REPORTS = {
+  full: {
     src: "/images/DRDT.jpg",
-    alt: "DRDT scalp and hair analysis report",
-    downloadName: "dse-report-DRDT.jpg",
+    alt: "Full scalp and hair assessment report",
+    downloadName: "dse-report-full.jpg",
   },
-  {
-    id: "osdt",
+  advanced: {
     src: "/images/OSDT.jpg",
-    alt: "OSDT scalp and hair analysis report",
-    downloadName: "dse-report-OSDT.jpg",
+    alt: "Advanced scalp and hair assessment report",
+    downloadName: "dse-report-advanced.jpg",
   },
-] as const;
+} as const;
+
+type ReportTab = keyof typeof REPORTS;
+
+const COPY = {
+  idn: {
+    title: "Laporan Rambut & Kulit Kepalamu Sudah Siap",
+    subtitle: "Profil rambut personalmu sudah siap.",
+    full: "Full Report",
+    advanced: "Advanced",
+    tap: "Tap to open your report",
+    share: "Share",
+    products: "Product Recommendations",
+    close: "Close",
+  },
+  eng: {
+    title: "Your Hair & Scalp Report Is Ready",
+    subtitle: "Your personal hair profile is ready.",
+    full: "Full Report",
+    advanced: "Advanced",
+    tap: "Tap to open your report",
+    share: "Share",
+    products: "Product Recommendations",
+    close: "Close",
+  },
+} as const;
 
 export function ResultScreen() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const { locale } = useLocale();
+  const t = COPY[locale];
+  const [tab, setTab] = useState<ReportTab>("full");
   const [zoomed, setZoomed] = useState(false);
-  const activeReport = REPORTS[activeIndex] ?? REPORTS[0];
+  const report = REPORTS[tab];
 
   return (
-    <div className="relative min-h-dvh w-full overflow-x-hidden">
-      <Image
-        src="/images/bg.jpg"
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover object-center"
-      />
+    <div className="relative flex h-dvh w-full flex-col overflow-hidden">
+      <div className="relative z-10 mx-auto flex h-full w-full flex-col">
+        <AppHeader />
 
-      <div className="relative z-10 mx-auto flex min-h-dvh w-full max-w-[800px] flex-col px-5 pb-8 sm:px-8 md:px-8">
-        <header className="flex shrink-0 items-center justify-center pt-5 sm:pt-7 md:pt-8">
-          <Image
-            src="/images/logo.svg"
-            alt="dse Dermascalp Expert"
-            width={177}
-            height={50}
-            priority
-            className="h-8 w-auto sm:h-10 md:h-[50px]"
-          />
-        </header>
+        <div className="flex min-h-0 flex-1 flex-col items-center px-4 sm:px-8">
+          <div className="mt-1 w-[min(92%,675px)] bg-white/10 px-3 py-2 text-center backdrop-blur-[3px] sm:mt-2 sm:px-4">
+            <h1 className="type-headline font-medium text-white">{t.title}</h1>
+          </div>
+          <p className="type-lead mt-3 text-center text-white/50 sm:mt-4">
+            {t.subtitle}
+          </p>
 
-        <section className="mt-6 flex flex-1 flex-col items-center sm:mt-8 md:mt-10">
-          <h1 className="max-w-[533px] text-center text-[28px] font-medium leading-tight text-white sm:text-[40px] md:text-[48px] md:leading-[56px]">
-            Review your scalp and hair assessment
-          </h1>
+          <div className="mt-4 flex items-center justify-center gap-3 sm:mt-6 sm:gap-4">
+            {(["full", "advanced"] as const).map((id) => {
+              const selected = tab === id;
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setTab(id)}
+                  className={`text-base rounded-full px-5 py-2.5 font-medium uppercase sm:px-6 sm:py-3.5 ${
+                    selected
+                      ? "bg-black/35 text-white"
+                      : "bg-white/10 text-white"
+                  }`}
+                >
+                  {t[id]}
+                </button>
+              );
+            })}
+          </div>
 
           <button
             type="button"
             onClick={() => setZoomed(true)}
-            className="mt-4 flex items-center gap-3 text-white transition hover:opacity-80 sm:mt-5"
+            className="relative mt-4 w-[min(78%,23.5rem)] flex-1 sm:mt-0"
+            aria-label={t.tap}
           >
-            <Image
-              src="/images/zoom-in.svg"
-              alt=""
-              width={24}
-              height={24}
-              className="size-5 sm:size-6"
+            <span
+              className="absolute top-[8%] right-0 bottom-[4%] left-[12%] rounded-[1.4rem] bg-black"
               aria-hidden
             />
-            <span className="text-[16px] sm:text-[20px] md:text-[24px] md:leading-[41px]">
-              Tap to close up your report
+            <span
+              className="absolute top-[4%] right-[6%] bottom-[8%] left-[6%] rounded-[1.4rem] bg-white shadow-[0_12px_30px_rgba(0,0,0,0.18)]"
+              aria-hidden
+            />
+            <span className="absolute inset-x-0 top-[7%] bottom-0 flex flex-col rounded-[1.6rem] bg-[#163844] px-5 pt-5 pb-6 text-left shadow-[0_18px_40px_rgba(0,0,0,0.25)] sm:px-6 sm:pt-6">
+              <Image
+                src="/images/logo.svg"
+                alt=""
+                width={133}
+                height={37}
+                className="h-7 w-auto sm:h-9"
+              />
+              <span className="mt-auto">
+                <span className="type-lead block font-medium text-white">
+                  Personalized Assessment Report
+                </span>
+                <span className="mt-2 block text-[clamp(0.8rem,0.4rem+1.4vw,1.15rem)] text-white/90 italic">
+                  Prepared exclusively for you
+                </span>
+              </span>
+            </span>
+            <span className="absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-full bg-white/17 px-3.5 py-1.5 text-white backdrop-blur-md sm:px-4 sm:py-2">
+              <Image
+                src="/images/zoom-in.svg"
+                alt=""
+                width={20}
+                height={20}
+                className="size-4 shrink-0 sm:size-5"
+              />
+              <span className="text-[clamp(0.75rem,0.45rem+0.9vw,1rem)] leading-none whitespace-nowrap">
+                {t.tap}
+              </span>
             </span>
           </button>
+        </div>
 
-          <div className="relative mt-6 w-full max-w-[471px] sm:mt-8">
-            <Swiper
-              modules={[Pagination]}
-              slidesPerView={1}
-              spaceBetween={16}
-              pagination={{
-                el: ".result-pagination",
-                clickable: true,
-              }}
-              onSwiper={(swiper: SwiperType) => setActiveIndex(swiper.activeIndex)}
-              onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-              className="result-swiper w-full overflow-visible"
-            >
-              {REPORTS.map((report, index) => (
-                <SwiperSlide key={report.id}>
-                  <button
-                    type="button"
-                    onClick={() => setZoomed(true)}
-                    className="w-full overflow-hidden rounded-sm shadow-[0_20px_60px_rgba(0,0,0,0.25)] transition hover:scale-[1.01]"
-                    aria-label={`Open ${report.id.toUpperCase()} report preview`}
-                  >
-                    <Image
-                      src={report.src}
-                      alt={report.alt}
-                      width={856}
-                      height={1284}
-                      priority={index === 0}
-                      className="h-auto w-full"
-                    />
-                  </button>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-
-            <div className="result-pagination mt-4 flex items-center justify-center gap-2" />
-          </div>
-        </section>
-
-        <div className="mx-auto mt-8 flex w-full max-w-[734px] flex-col gap-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:mt-10 sm:flex-row sm:gap-4 md:mt-12">
+        <div className="mx-auto flex w-full max-w-[734px] items-center gap-3 px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] sm:gap-4 sm:px-8 sm:pb-6">
           <Link
-            href="/"
-            className="flex h-[64px] flex-1 items-center justify-center rounded-full border-2 border-white/30 bg-[rgba(255,255,255,0.11)] text-[18px] font-medium text-white backdrop-blur-[52px] transition hover:bg-white/20 sm:h-[80px] sm:text-[24px] md:h-[106px] md:text-[32px]"
+            href="/share"
+            className="flex h-[clamp(2.75rem,1.4rem+4vw,4rem)] w-[30%] shrink-0 items-center justify-center rounded-full border-2 border-white/30 bg-white text-[clamp(0.85rem,0.4rem+1.5vw,1.25rem)] font-medium whitespace-nowrap text-[#4f9fa6] transition hover:bg-white/90"
           >
-            Back to Home
+            {t.share}
           </Link>
-          <a
-            href={activeReport.src}
-            download={activeReport.downloadName}
-            className="flex h-[64px] flex-1 items-center justify-center rounded-full border-2 border-white/30 bg-white text-[18px] font-medium text-[#4f9fa6] transition hover:bg-white/90 sm:h-[80px] sm:text-[24px] md:h-[106px] md:text-[32px]"
+          <Link
+            href="/products"
+            className="flex h-[clamp(2.75rem,1.4rem+4vw,4rem)] min-w-0 flex-1 items-center justify-center rounded-full border-2 border-white/30 bg-white/11 px-4 text-[clamp(0.8rem,0.35rem+1.5vw,1.15rem)] font-medium whitespace-nowrap text-white backdrop-blur-[52px] transition hover:bg-white/20"
           >
-            Download
-          </a>
+            {t.products}
+          </Link>
         </div>
       </div>
 
@@ -136,7 +152,7 @@ export function ResultScreen() {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
-          aria-label="Report close-up"
+          aria-label={t.tap}
           onClick={() => setZoomed(false)}
         >
           <button
@@ -144,15 +160,15 @@ export function ResultScreen() {
             className="absolute top-5 right-5 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm text-white backdrop-blur-md"
             onClick={() => setZoomed(false)}
           >
-            Close
+            {t.close}
           </button>
           <Image
-            src={activeReport.src}
-            alt={`${activeReport.alt} close-up`}
+            src={report.src}
+            alt={report.alt}
             width={1200}
             height={1800}
             className="max-h-[90dvh] w-auto max-w-full object-contain"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(event) => event.stopPropagation()}
           />
         </div>
       )}

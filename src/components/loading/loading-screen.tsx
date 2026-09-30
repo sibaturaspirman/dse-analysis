@@ -37,16 +37,7 @@ export function LoadingScreen() {
 
   return (
     <div className="relative h-dvh w-full overflow-hidden">
-      <Image
-        src="/images/bg.jpg"
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover object-center"
-      />
-
-      <div className="relative z-10 mx-auto flex h-full w-full max-w-[800px] flex-col px-6">
+      <div className="relative z-10 mx-auto flex h-full w-full flex-col px-6">
         <header className="flex shrink-0 items-center justify-center pt-5 sm:pt-7 md:pt-8">
           <Image
             src="/images/logo.svg"
@@ -54,15 +45,15 @@ export function LoadingScreen() {
             width={177}
             height={50}
             priority
-            className="h-8 w-auto sm:h-10 md:h-[50px]"
+            className="logo-mark"
           />
         </header>
 
         <div className="mt-6 flex shrink-0 flex-col items-center gap-3 text-center text-white sm:mt-8 sm:gap-4 md:mt-10 md:gap-5">
-          <p className="text-[14px] font-bold uppercase tracking-[0.04em] sm:text-[18px] md:text-[20px] md:leading-[41px]">
+          <p className="type-label font-bold uppercase tracking-[0.04em]">
             Your Initial Analysis
           </p>
-          <h1 className="max-w-[520px] text-[28px] font-medium leading-tight sm:text-[40px] md:text-[48px] md:leading-[65.5px]">
+          <h1 className="type-display max-w-[520px] font-medium">
             Your hair profile is ready.
           </h1>
         </div>
@@ -87,7 +78,7 @@ export function LoadingScreen() {
             return (
               <div
                 key={step}
-                className={`flex items-center gap-1.5 text-[18px] text-white transition-all duration-500 sm:text-[22px] md:text-[24px] md:leading-[18px] ${
+                className={`type-lead flex items-center gap-1.5 text-white transition-all duration-500 ${
                   isDone
                     ? "translate-y-0 opacity-100"
                     : "translate-y-2 opacity-0"
@@ -101,7 +92,7 @@ export function LoadingScreen() {
 
           {showEllipsis && visibleCount > 0 && visibleCount < STEPS.length && (
             <p
-              className="text-[18px] tracking-[0.35em] text-white sm:text-[22px] md:text-[24px]"
+              className="type-lead tracking-[0.35em] text-white"
               aria-hidden
             >
               <span className="inline-flex gap-1">

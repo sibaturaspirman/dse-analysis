@@ -7,14 +7,28 @@ import type { Swiper as SwiperType } from "swiper";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
+import { useLocale } from "@/components/i18n/locale-context";
 import { HAIR_TYPES } from "@/lib/hair-types";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
+const COPY = {
+  idn: {
+    select: "Pilih Tipe Rambut Spesifik",
+    continue: "Continue",
+  },
+  eng: {
+    select: "Select Specific Hair",
+    continue: "Continue",
+  },
+} as const;
+
 export function HairSelector() {
   const router = useRouter();
+  const { locale } = useLocale();
+  const t = COPY[locale];
   const swiperRef = useRef<SwiperType | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -35,7 +49,7 @@ export function HairSelector() {
               key={hair.id}
               type="button"
               onClick={() => goToSlide(index)}
-              className={`rounded-full px-4 py-3 text-[13px] font-bold uppercase leading-none transition sm:px-5 sm:py-4 sm:text-[18px] md:px-6 md:py-6 md:text-[24px] md:leading-6 ${
+              className={`type-chip rounded-full font-bold uppercase transition ${
                 isActive
                   ? "bg-white text-[#4f9fa6]"
                   : "bg-white/10 text-white hover:bg-white/20"
@@ -47,15 +61,15 @@ export function HairSelector() {
         })}
       </div>
 
-      <div className="mx-auto mt-4 w-full max-w-[561px] shrink-0 px-6 sm:mt-5">
+      <div className="mx-auto mt-4 w-full max-w-[561px] shrink-0 px-5 sm:mt-5 sm:px-6">
         <div className="h-px w-full bg-white/40" />
       </div>
 
-      <div className="mx-auto mt-3 flex w-full max-w-[600px] shrink-0 items-center justify-between px-6 sm:mt-4 sm:px-8 md:px-0">
-        <p className="text-[15px] text-white sm:text-[20px] md:text-[24px] md:leading-8">
-          Select Specific Hair
+      <div className="mx-auto mt-3 flex w-full max-w-[600px] shrink-0 items-center justify-between gap-3 px-5 sm:mt-4 sm:px-8 md:px-0">
+        <p className="type-body text-white">
+          {t.select}
         </p>
-        <p className="text-[15px] font-bold text-white sm:text-[20px] md:text-[24px] md:leading-8">
+        <p className="type-body shrink-0 font-bold text-white">
           {activeHair.code}
         </p>
       </div>
@@ -108,7 +122,7 @@ export function HairSelector() {
         <button
           type="button"
           aria-label="Previous hair type"
-          className="hair-nav-prev absolute top-[38%] left-3 z-20 flex size-12 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white/30 bg-white/10 backdrop-blur-[52px] transition hover:bg-white/20 sm:left-5 sm:size-16 md:left-8 md:size-[88px]"
+          className="hair-nav-prev absolute top-[38%] left-3 z-20 flex size-[clamp(3rem,0.625rem+9.75vw,5.5rem)] -translate-y-1/2 items-center justify-center rounded-full border-2 border-white/30 bg-white/10 backdrop-blur-[52px] transition hover:bg-white/20 sm:left-5 md:left-8"
         >
           <Image
             src="/images/chevron-nav.svg"
@@ -123,7 +137,7 @@ export function HairSelector() {
         <button
           type="button"
           aria-label="Next hair type"
-          className="hair-nav-next absolute top-[38%] right-3 z-20 flex size-12 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white/30 bg-white/10 backdrop-blur-[52px] transition hover:bg-white/20 sm:right-5 sm:size-16 md:right-8 md:size-[88px]"
+          className="hair-nav-next absolute top-[38%] right-3 z-20 flex size-[clamp(3rem,0.625rem+9.75vw,5.5rem)] -translate-y-1/2 items-center justify-center rounded-full border-2 border-white/30 bg-white/10 backdrop-blur-[52px] transition hover:bg-white/20 sm:right-5 md:right-8"
         >
           <Image
             src="/images/chevron-nav.svg"
@@ -145,9 +159,9 @@ export function HairSelector() {
           onClick={() =>
             router.push(`/questions?hair=${encodeURIComponent(activeHair.id)}`)
           }
-          className="pointer-events-auto mx-auto flex h-[64px] w-full max-w-[600px] items-center justify-center rounded-full border-2 border-white/30 bg-[rgba(255,255,255,0.11)] text-[20px] font-medium text-white backdrop-blur-[52px] transition hover:bg-white/20 sm:h-[80px] sm:text-[28px] md:h-[106px] md:text-[32px]"
+          className="btn-cta pointer-events-auto mx-auto flex w-full max-w-[600px] items-center justify-center rounded-full border-2 border-white/30 bg-[rgba(255,255,255,0.11)] font-medium text-white backdrop-blur-[52px] transition hover:bg-white/20"
         >
-          Continue
+          {t.continue}
         </button>
       </div>
     </div>

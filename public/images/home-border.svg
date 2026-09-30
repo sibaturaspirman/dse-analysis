@@ -1,0 +1,32 @@
+<svg width="800" height="1279" viewBox="0 0 800 1279" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="800" height="1279" fill="#1E1E1E"/>
+<g id="Bahasa Indonesia - New Brand">
+<path d="M-160 -1454C-160 -1455.1 -159.105 -1456 -158 -1456H43808C43809.1 -1456 43810 -1455.1 43810 -1454V5657C43810 5658.1 43809.1 5659 43808 5659H-158C-159.105 5659 -160 5658.1 -160 5657V-1454Z" fill="#353535"/>
+<path d="M-158 -1456V-1455H43808V-1456V-1457H-158V-1456ZM43810 -1454H43809V5657H43810H43811V-1454H43810ZM43808 5659V5658H-158V5659V5660H43808V5659ZM-160 5657H-159V-1454H-160H-161V5657H-160ZM-158 5659V5658C-158.552 5658 -159 5657.55 -159 5657H-160H-161C-161 5658.66 -159.657 5660 -158 5660V5659ZM43810 5657H43809C43809 5657.55 43808.6 5658 43808 5658V5659V5660C43809.7 5660 43811 5658.66 43811 5657H43810ZM43808 -1456V-1455C43808.6 -1455 43809 -1454.55 43809 -1454H43810H43811C43811 -1455.66 43809.7 -1457 43808 -1457V-1456ZM-158 -1456V-1457C-159.657 -1457 -161 -1455.66 -161 -1454H-160H-159C-159 -1454.55 -158.552 -1455 -158 -1455V-1456Z" fill="white" fill-opacity="0.1"/>
+<g id="Journey 1 ( IND )">
+<path d="M-80 -79C-80 -80.1045 -79.1046 -81 -78 -81H6421C6422.1 -81 6423 -80.1046 6423 -79V1357C6423 1358.1 6422.1 1359 6421 1359H-77.9999C-79.1045 1359 -80 1358.1 -80 1357V-79Z" fill="#444444"/>
+<path d="M-78 -81V-80H6421V-81V-82H-78V-81ZM6423 -79H6422V1357H6423H6424V-79H6423ZM6421 1359V1358H-77.9999V1359V1360H6421V1359ZM-80 1357H-79V-79H-80H-81V1357H-80ZM-77.9999 1359V1358C-78.5523 1358 -79 1357.55 -79 1357H-80H-81C-81 1358.66 -79.6568 1360 -77.9999 1360V1359ZM6423 1357H6422C6422 1357.55 6421.55 1358 6421 1358V1359V1360C6422.66 1360 6424 1358.66 6424 1357H6423ZM6421 -81V-80C6421.55 -80 6422 -79.5522 6422 -79H6423H6424C6424 -80.6569 6422.66 -82 6421 -82V-81ZM-78 -81V-82C-79.6569 -82 -81 -80.6568 -81 -79H-80H-79C-79 -79.5523 -78.5523 -80 -78 -80V-81Z" fill="white" fill-opacity="0.1"/>
+<g id="BG Home" clip-path="url(#clip0_7119_2274)">
+<rect width="800" height="1280" transform="translate(0 -1)" fill="white"/>
+<g id="Frame 2007734908">
+<g id="Group 1008">
+<path id="Vector 156" d="M32 0L32.0001 1279" stroke="white" stroke-width="0.2"/>
+<path id="Vector 157" d="M768 0L768 1279" stroke="white" stroke-width="0.2"/>
+<path id="Vector 158" d="M0 39L800 39" stroke="white" stroke-width="0.2"/>
+<path id="Vector 160" d="M0 788L800 788" stroke="white" stroke-width="0.2"/>
+<path id="Vector 159" d="M0 1239L800 1239" stroke="white" stroke-width="0.2"/>
+<rect id="Rectangle 22146" x="28" y="39.2422" width="6" height="6" transform="rotate(-45 28 39.2422)" fill="white"/>
+<rect id="Rectangle 22148" x="28" y="1239.24" width="6" height="6" transform="rotate(-45 28 1239.24)" fill="white"/>
+<rect id="Rectangle 22147" x="764" y="39.2422" width="6" height="6" transform="rotate(-45 764 39.2422)" fill="white"/>
+<rect id="Rectangle 22149" x="764" y="1239.24" width="6" height="6" transform="rotate(-45 764 1239.24)" fill="white"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_7119_2274">
+<rect width="800" height="1280" fill="white" transform="translate(0 -1)"/>
+</clipPath>
+</defs>
+</svg>
