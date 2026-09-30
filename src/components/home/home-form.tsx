@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useLocale } from "@/components/i18n/locale-context";
+import { headingDisplay } from "@/lib/typography";
 
 const MONTHS_ENG = [
   "January",
@@ -77,7 +78,7 @@ function Chevron() {
   );
 }
 
-const fieldLabel = "type-lead w-full text-left text-white";
+const fieldLabel = "text-lead w-full text-left text-white";
 
 const pillBase =
   "field-pill relative flex w-full items-center rounded-full border-2 border-[rgba(255,255,255,0.3)] bg-white font-medium text-[#3c7a85] outline-none backdrop-blur-[52px] transition focus-within:ring-2 focus-within:ring-white/40";
@@ -128,11 +129,11 @@ export function HomeForm() {
     >
       <div className="mx-auto mb-6 w-full text-center sm:mb-8 md:mb-10">
         <div className="rounded-lg bg-white/9 px-1 py-2 backdrop-blur-[3px] sm:py-2.5">
-          <h1 className="type-display font-medium text-white">
+          <h1 className={headingDisplay}>
             {t.title}
           </h1>
         </div>
-        <p className="type-lead mt-3 text-white/50 sm:mt-4">
+        <p className="text-lead mt-3 text-white/50 sm:mt-4">
           {t.subtitle}
         </p>
       </div>

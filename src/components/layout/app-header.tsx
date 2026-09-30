@@ -23,7 +23,7 @@ export function AppHeader({
       className={`z-20 flex shrink-0 justify-between gap-2 sm:gap-3 pb-0 ${
         isHero
           ? "absolute inset-x-[4%] top-[4.8%] w-auto items-start px-3 sm:top-[4.4%] sm:px-4 md:px-5"
-          : "relative w-full items-center px-4 pt-3 pb-0 sm:px-6 sm:pt-5 md:px-10 md:pt-8"
+          : "relative w-full items-center px-4 pt-3 pb-0 sm:px-6 sm:pt-3 md:px-10 md:pt-4"
       } ${className}`}
     >
       <div
@@ -51,7 +51,7 @@ export function AppHeader({
               className={`logo-mark ${isLight ? "brightness-0" : ""}`}
             />
             <span
-              className={`type-meta truncate tracking-wide ${
+              className={`text-meta truncate tracking-wide ${
                 isLight ? "text-[#404040]/80" : "text-white/90"
               }`}
             >

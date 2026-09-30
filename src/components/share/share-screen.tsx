@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import { useLocale } from "@/components/i18n/locale-context";
 import { AppHeader } from "@/components/layout/app-header";
+import { headingHeadline } from "@/lib/typography";
 
 const COPY = {
   idn: {
@@ -30,7 +31,7 @@ export function ShareScreen() {
 
         <div className="flex min-h-0 flex-1 flex-col items-center px-4 sm:px-8">
           <div className="mt-1 w-[min(92%,675px)] bg-white/10 px-3 py-2 text-center backdrop-blur-[3px] sm:mt-2 sm:px-4">
-            <h1 className="type-headline font-medium text-white">{t.title}</h1>
+            <h1 className={headingHeadline}>{t.title}</h1>
           </div>
 
           <div className="mt-4 flex min-h-0 w-full flex-1 items-center justify-center sm:mt-6">

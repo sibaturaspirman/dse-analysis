@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { textDisplay } from "@/lib/typography";
+
 const STEPS = [
   "Scalp Condition",
   "Hair Condition",
@@ -50,10 +52,10 @@ export function LoadingScreen() {
         </header>
 
         <div className="mt-6 flex shrink-0 flex-col items-center gap-3 text-center text-white sm:mt-8 sm:gap-4 md:mt-10 md:gap-5">
-          <p className="type-label font-bold uppercase tracking-[0.04em]">
+          <p className="text-label font-bold uppercase tracking-[0.04em]">
             Your Initial Analysis
           </p>
-          <h1 className="type-display max-w-[520px] font-medium">
+          <h1 className={`${textDisplay} max-w-[520px] font-medium`}>
             Your hair profile is ready.
           </h1>
         </div>
@@ -78,7 +80,7 @@ export function LoadingScreen() {
             return (
               <div
                 key={step}
-                className={`type-lead flex items-center gap-1.5 text-white transition-all duration-500 ${
+                className={`text-lead flex items-center gap-1.5 text-white transition-all duration-500 ${
                   isDone
                     ? "translate-y-0 opacity-100"
                     : "translate-y-2 opacity-0"
@@ -92,7 +94,7 @@ export function LoadingScreen() {
 
           {showEllipsis && visibleCount > 0 && visibleCount < STEPS.length && (
             <p
-              className="type-lead tracking-[0.35em] text-white"
+              className="text-lead tracking-[0.35em] text-white"
               aria-hidden
             >
               <span className="inline-flex gap-1">

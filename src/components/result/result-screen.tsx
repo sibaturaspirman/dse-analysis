@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { useLocale } from "@/components/i18n/locale-context";
 import { AppHeader } from "@/components/layout/app-header";
+import { headingHeadline } from "@/lib/typography";
 
 const REPORTS = {
   full: {
@@ -59,9 +60,9 @@ export function ResultScreen() {
 
         <div className="flex min-h-0 flex-1 flex-col items-center px-4 sm:px-8">
           <div className="mt-1 w-[min(92%,675px)] bg-white/10 px-3 py-2 text-center backdrop-blur-[3px] sm:mt-2 sm:px-4">
-            <h1 className="type-headline font-medium text-white">{t.title}</h1>
+            <h1 className={headingHeadline}>{t.title}</h1>
           </div>
-          <p className="type-lead mt-3 text-center text-white/50 sm:mt-4">
+          <p className="text-base md:text-lead mt-3 text-center text-white/50 sm:mt-4">
             {t.subtitle}
           </p>
 
@@ -73,7 +74,7 @@ export function ResultScreen() {
                   key={id}
                   type="button"
                   onClick={() => setTab(id)}
-                  className={`text-base rounded-full px-5 py-2.5 font-medium uppercase sm:px-6 sm:py-3.5 ${
+                  className={`text-xs md:text-base rounded-full px-5 py-2.5 font-medium uppercase sm:px-6 sm:py-3.5 ${
                     selected
                       ? "bg-black/35 text-white"
                       : "bg-white/10 text-white"
@@ -108,7 +109,7 @@ export function ResultScreen() {
                 className="h-7 w-auto sm:h-9"
               />
               <span className="mt-auto">
-                <span className="type-lead block font-medium text-white">
+                <span className="text-lead block font-medium text-white">
                   Personalized Assessment Report
                 </span>
                 <span className="mt-2 block text-[clamp(0.8rem,0.4rem+1.4vw,1.15rem)] text-white/90 italic">

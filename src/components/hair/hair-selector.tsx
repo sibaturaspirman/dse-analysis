@@ -49,7 +49,7 @@ export function HairSelector() {
               key={hair.id}
               type="button"
               onClick={() => goToSlide(index)}
-              className={`type-chip rounded-full font-bold uppercase transition ${
+              className={`text-chip rounded-full px-[clamp(0.55rem,3vw,1.5rem)] py-[clamp(0.5rem,3vw,1.5rem)] font-bold uppercase transition ${
                 isActive
                   ? "bg-white text-[#4f9fa6]"
                   : "bg-white/10 text-white hover:bg-white/20"
@@ -66,10 +66,10 @@ export function HairSelector() {
       </div>
 
       <div className="mx-auto mt-3 flex w-full max-w-[600px] shrink-0 items-center justify-between gap-3 px-5 sm:mt-4 sm:px-8 md:px-0">
-        <p className="type-body text-white">
+        <p className="text-body text-white">
           {t.select}
         </p>
-        <p className="type-body shrink-0 font-bold text-white">
+        <p className="text-body shrink-0 font-bold text-white">
           {activeHair.code}
         </p>
       </div>

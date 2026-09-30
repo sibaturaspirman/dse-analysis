@@ -13,6 +13,24 @@
   --color-foreground: var(--foreground);
   --color-input-text: var(--input-text);
   --font-sans: var(--font-dm-sans);
+
+  /* Fluid type: Figma sizes land at 800px, then stop growing. */
+  --text-page: clamp(1.6rem, 1.04rem + 2.9vw, 2.5rem);
+  --text-page--line-height: 1.15;
+  --text-lead: clamp(1.15rem, 0.8rem + 2.4vw, 2rem);
+  --text-lead--line-height: 1.25;
+  --text-body: clamp(0.95rem, 0.64rem + 1.7vw, 1.5rem);
+  --text-body--line-height: 1.35;
+  --text-label: clamp(0.95rem, 0.64rem + 1.7vw, 1.5rem);
+  --text-label--line-height: 1.35;
+  --text-chip: clamp(0.8125rem, 0.28rem + 2.44vw, 1.5rem);
+  --text-chip--line-height: 1;
+  --text-dial: clamp(0.7rem, 0.39rem + 1.46vw, 1.125rem);
+  --text-dial--line-height: 1.15;
+  --text-meta: clamp(0.75rem, 0.58rem + 0.5vw, 0.95rem);
+  --text-meta--line-height: 1.2;
+  --text-toggle: clamp(0.875rem, 0.52rem + 1.95vw, 1.5rem);
+  --text-toggle--line-height: 1.2;
 }
 
 * {
@@ -34,64 +52,6 @@ body {
 select {
   appearance: none;
   background-image: none;
-}
-
-/* Fluid type: Figma sizes land at 800px, then stop growing. */
-.type-display {
-  font-size: clamp(2.15rem, 1.45rem + 4.1vw, 3.5rem);
-  line-height: 1.17;
-}
-
-.type-headline {
-  font-size: clamp(1.85rem, 1.25rem + 3.5vw, 3rem);
-  line-height: 1.25;
-}
-
-.type-page {
-  font-size: clamp(1.6rem, 1.04rem + 2.9vw, 2.5rem);
-  line-height: 1.15;
-}
-
-.type-title {
-  font-size: clamp(1.35rem, 1.15rem + 1.95vw, 2.125rem);
-  line-height: 1.18;
-}
-
-.type-lead {
-  font-size: clamp(1.15rem, 0.8rem + 2.4vw, 2rem);
-  line-height: 1.25;
-}
-
-.type-body {
-  font-size: clamp(0.95rem, 0.64rem + 1.7vw, 1.5rem);
-  line-height: 1.35;
-}
-
-.type-label {
-  font-size: clamp(0.95rem, 0.64rem + 1.7vw, 1.5rem);
-  line-height: 1.35;
-}
-
-.type-chip {
-  font-size: clamp(0.8125rem, 0.28rem + 2.44vw, 1.5rem);
-  line-height: 1;
-  padding: clamp(0.5rem, 3vw, 1.5rem) clamp(0.55rem, 3vw, 1.5rem);
-}
-
-.type-dial {
-  font-size: clamp(0.7rem, 0.39rem + 1.46vw, 1.125rem);
-  line-height: 1.15;
-  max-width: clamp(4.5rem, 3rem + 4vw, 7.5rem);
-}
-
-.type-meta {
-  font-size: clamp(0.75rem, 0.58rem + 0.5vw, 0.95rem);
-  line-height: 1.2;
-}
-
-.type-toggle {
-  font-size: clamp(0.875rem, 0.52rem + 1.95vw, 1.5rem);
-  line-height: 1.2;
 }
 
 .btn-cta {

@@ -103,12 +103,20 @@ type ScalpDialProps = {
   onChange: (optionId: string) => void;
 };
 
+function startKnobAngle(options: ScalpOption[], value: string | null) {
+  if (value) {
+    return options.find((option) => option.id === value)?.angle ?? options[0]?.angle ?? 0;
+  }
+  return options[0]?.angle ?? 0;
+}
+
 export function ScalpDial({ options, value, onChange }: ScalpDialProps) {
   const { locale } = useLocale();
   const dialRef = useRef<HTMLDivElement>(null);
-  const angleRef = useRef(0);
+  const initialAngle = startKnobAngle(options, value);
+  const angleRef = useRef(initialAngle);
   const sweepRef = useRef(0);
-  const arcOriginRef = useRef(0);
+  const arcOriginRef = useRef(initialAngle);
   const shownIdRef = useRef<string | null>(value);
   const paintRef = useRef<number | null>(null);
   const snapRef = useRef<number | null>(null);
@@ -124,9 +132,9 @@ export function ScalpDial({ options, value, onChange }: ScalpDialProps) {
     armed: boolean;
   } | null>(null);
 
-  const [displayAngle, setDisplayAngle] = useState(0);
+  const [displayAngle, setDisplayAngle] = useState(initialAngle);
   const [sweep, setSweep] = useState(0);
-  const [arcOrigin, setArcOrigin] = useState(0);
+  const [arcOrigin, setArcOrigin] = useState(initialAngle);
   const [engaged, setEngaged] = useState(false);
   const [showArc, setShowArc] = useState(false);
   const [shownId, setShownId] = useState<string | null>(value);
@@ -150,12 +158,19 @@ export function ScalpDial({ options, value, onChange }: ScalpDialProps) {
     });
   }
 
-  function select(id: string) {
+  function previewOption(id: string) {
+    if (shownIdRef.current === id) return;
+    shownIdRef.current = id;
+    paint();
+  }
+
+  function commitOption(id: string) {
     shownIdRef.current = id;
     if (id !== valueRef.current) {
       valueRef.current = id;
       onChangeRef.current(id);
     }
+    paint();
   }
 
   function animateTo(target: number, keepArc: boolean) {
@@ -203,7 +218,17 @@ export function ScalpDial({ options, value, onChange }: ScalpDialProps) {
     const selected = options.find((option) => option.id === value) ?? null;
     shownIdRef.current = selected?.id ?? null;
     setShownId(shownIdRef.current);
-    if (!selected) return;
+    if (!selected) {
+      const start = startKnobAngle(options, null);
+      angleRef.current = start;
+      arcOriginRef.current = start;
+      sweepRef.current = 0;
+      setDisplayAngle(start);
+      setArcOrigin(start);
+      setSweep(0);
+      setShowArc(false);
+      return;
+    }
     angleRef.current = selected.angle;
     arcOriginRef.current = selected.angle;
     sweepRef.current = 0;
@@ -256,7 +281,7 @@ export function ScalpDial({ options, value, onChange }: ScalpDialProps) {
       // Near the center the angle is unstable, so wait until the finger is on the ring.
       if (!valueRef.current && polar.radius < INNER_R) return;
       drag.armed = true;
-      const start = valueRef.current ? angleRef.current : polar.angle;
+      const start = angleRef.current;
       angleRef.current = start;
       arcOriginRef.current = start;
       sweepRef.current = 0;
@@ -304,7 +329,7 @@ export function ScalpDial({ options, value, onChange }: ScalpDialProps) {
       option.id !== shownIdRef.current &&
       (diff + 6 < currentDiff || diff < 14)
     ) {
-      select(option.id);
+      previewOption(option.id);
     }
 
     paint();
@@ -332,7 +357,7 @@ export function ScalpDial({ options, value, onChange }: ScalpDialProps) {
       const hit = hitOption(polar, list);
       if (hit) {
         const hadValue = valueRef.current != null;
-        select(hit.id);
+        commitOption(hit.id);
         if (!hadValue) {
           angleRef.current = hit.angle;
           arcOriginRef.current = hit.angle;
@@ -353,15 +378,23 @@ export function ScalpDial({ options, value, onChange }: ScalpDialProps) {
     }
 
     const { option } = nearestOption(angleRef.current, list);
-    select(option.id);
+    commitOption(option.id);
     setShowArc(true);
     animateTo(option.angle, true);
   }
 
-  const activeImage =
-    options.find((option) => option.id === shownId)?.image ??
-    options[0]?.image;
-  const knobVisible = Boolean(shownId) || engaged;
+  const previewId = shownId ?? options[0]?.id;
+  const previewOptionData =
+    options.find((option) => option.id === previewId) ?? options[0];
+  const committedOption =
+    value != null
+      ? (options.find((option) => option.id === value) ?? null)
+      : null;
+  const showDescription = Boolean(committedOption) && !engaged;
+  const activeImage = previewOptionData?.image;
+  const activeDescription = committedOption?.description[locale];
+  const knobVisible =
+    Boolean(shownId) || engaged || (value == null && options.length > 0);
   const knob = knobVisible ? polarToXY(displayAngle, TRACK_R) : null;
   const arcPath = showArc ? describeSweep(arcOrigin, sweep, TRACK_R) : "";
 
@@ -406,16 +439,11 @@ export function ScalpDial({ options, value, onChange }: ScalpDialProps) {
         ) : null}
       </svg>
 
-      <div
-        className="pointer-events-none absolute left-1/2 top-1/2 z-10 overflow-hidden rounded-full bg-white shadow-[0_0_0_6px_rgba(255,255,255,0.9)]"
-        style={{
-          width: `${((IMAGE_R * 2) / SIZE) * 100}%`,
-          height: `${((IMAGE_R * 2) / SIZE) * 100}%`,
-          transform: "translate(-50%, -50%)",
-        }}
-      >
-        {activeImage ? <DialPhoto src={activeImage} /> : null}
-      </div>
+      <DialCenterHub
+        imageSrc={activeImage}
+        description={activeDescription}
+        showDescription={showDescription}
+      />
 
       <svg
         viewBox={`0 0 ${SIZE} ${SIZE}`}
@@ -455,7 +483,7 @@ export function ScalpDial({ options, value, onChange }: ScalpDialProps) {
         return (
           <span
             key={option.id}
-            className={`type-dial pointer-events-none absolute z-30 text-center ${
+            className={`text-dial max-w-[clamp(4.5rem,3rem+4vw,7.5rem)] pointer-events-none absolute z-30 text-center ${
               isActive ? "font-semibold text-[#4a999e]" : "text-[#241f21]"
             }`}
             style={{
@@ -478,7 +506,58 @@ export function ScalpDial({ options, value, onChange }: ScalpDialProps) {
   );
 }
 
-function DialPhoto({ src }: { src: string }) {
+const centerDescriptionClass =
+  "text-center text-[clamp(0.85rem,0.55rem+1.2vw,1.35rem)] font-medium leading-snug text-[#4a999e]";
+
+function DialCenterHub({
+  imageSrc,
+  description,
+  showDescription,
+}: {
+  imageSrc?: string;
+  description?: string;
+  showDescription: boolean;
+}) {
+  return (
+    <div
+      className="pointer-events-none absolute left-1/2 top-1/2 z-10 overflow-hidden rounded-full bg-[#e9f3f4]"
+      style={{
+        width: `${((IMAGE_R * 2) / SIZE) * 100}%`,
+        height: `${((IMAGE_R * 2) / SIZE) * 100}%`,
+        transform: "translate(-50%, -50%)",
+      }}
+    >
+      <div className="relative h-full w-full">
+        <div
+          className={`absolute inset-0 overflow-hidden transition-opacity duration-500 ease-out motion-reduce:transition-none ${
+            showDescription ? "opacity-0" : "opacity-100"
+          }`}
+        >
+          {imageSrc ? <DialPhoto src={imageSrc} /> : null}
+        </div>
+        <div
+          className={`absolute inset-0 flex items-center justify-center px-[10%] transition-opacity duration-500 ease-out motion-reduce:transition-none ${
+            showDescription ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          {description ? (
+            <p key={description} className={centerDescriptionClass}>
+              {description}
+            </p>
+          ) : null}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DialPhoto({
+  src,
+  className = "object-cover",
+}: {
+  src: string;
+  className?: string;
+}) {
   const [current, setCurrent] = useState(src);
   const [previous, setPrevious] = useState<string | null>(null);
   const [visible, setVisible] = useState(true);
@@ -501,7 +580,7 @@ function DialPhoto({ src }: { src: string }) {
           fill
           draggable={false}
           sizes="(max-width: 800px) 60vw, 320px"
-          className="pointer-events-none object-cover"
+          className={`pointer-events-none ${className}`}
         />
       ) : null}
       <Image
@@ -510,7 +589,7 @@ function DialPhoto({ src }: { src: string }) {
         fill
         draggable={false}
         sizes="(max-width: 800px) 60vw, 320px"
-        className={`pointer-events-none object-cover transition-opacity duration-300 ${
+        className={`pointer-events-none transition-opacity duration-300 ${className} ${
           visible ? "opacity-100" : "opacity-0"
         }`}
         priority

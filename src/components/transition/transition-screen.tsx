@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useLocale } from "@/components/i18n/locale-context";
 import { AppHeader } from "@/components/layout/app-header";
 import { ScanOverlay } from "@/components/shared/scan-overlay";
+import { headingDisplay } from "@/lib/typography";
 
 /** Prototype timing: hold 0.8s, talent rise 1.5s ease-out, scan 0.8s. */
 const HOLD_MS = 800;
@@ -29,13 +30,21 @@ const VARIANTS = {
       idn: {
         title: "Awal yang bagus!",
         subtitle: "Selanjutnya, mari kenali gaya hidupmu.",
-        tip: "Tips: Kebiasaan sehari-harimu dapat membantu memahami kebutuhan rambutmu.",
+        tips: [
+          "Sebentar lagi kita lanjut ke pertanyaan gaya hidupmu.",
+          "Jawabanmu membantu kami memahami kondisi kulit kepalamu.",
+          "Tips: Kebiasaan sehari-harimu dapat membantu memahami kebutuhan rambutmu.",
+        ],
         continue: "Continue",
       },
       eng: {
         title: "Great start!",
         subtitle: "Next, let's get to know your lifestyle.",
-        tip: "Tip: Your daily habits can help us understand your hair needs.",
+        tips: [
+          "Up next: a few lifestyle questions tailored to you.",
+          "Your answers help us understand your scalp condition.",
+          "Tip: Your daily habits can help us understand your hair needs.",
+        ],
         continue: "Continue",
       },
     },
@@ -51,19 +60,56 @@ const VARIANTS = {
         title: "Analisis Selesai",
         subtitle:
           "Kami telah mengumpulkan semua informasinya untuk memahami kondisi rambutmu dengan lebih baik.",
-        tip: "Tips: Kebiasaan sehari-harimu dapat membantu memahami kebutuhan rambutmu.",
+        tips: [
+          "Kami merangkum semua jawabanmu untuk analisis yang akurat.",
+          "Laporan rambut dan kulit kepalamu sedang disiapkan.",
+          "Tips: Kebiasaan sehari-harimu dapat membantu memahami kebutuhan rambutmu.",
+        ],
         continue: "Continue",
       },
       eng: {
         title: "Analysis complete",
         subtitle:
           "We've gathered everything we need to understand your hair better.",
-        tip: "Tip: Your daily habits can help us understand your hair needs.",
+        tips: [
+          "We're compiling your answers into a personalized analysis.",
+          "Your hair and scalp report is almost ready.",
+          "Tip: Your daily habits can help us understand your hair needs.",
+        ],
         continue: "Continue",
       },
     },
   },
 } as const;
+
+const TIP_FADE_MS = 500;
+
+function TransitionTips({ tips, step }: { tips: readonly string[]; step: number }) {
+  const [shownStep, setShownStep] = useState(step);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    if (step === shownStep) return;
+    setVisible(false);
+    const id = window.setTimeout(() => {
+      setShownStep(step);
+      setVisible(true);
+    }, TIP_FADE_MS);
+    return () => window.clearTimeout(id);
+  }, [step, shownStep]);
+
+  return (
+    <div className="mx-auto flex min-h-[3.25rem] max-w-[692px] items-center justify-center sm:min-h-[4rem]">
+      <p
+        className={`text-sm md:text-lead text-center text-white transition-opacity duration-500 motion-reduce:transition-none ${
+          visible ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        {tips[shownStep] ?? tips[tips.length - 1]}
+      </p>
+    </div>
+  );
+}
 
 export function TransitionScreen({
   variant = "intro",
@@ -125,9 +171,9 @@ export function TransitionScreen({
 
           <div className="relative z-20 mx-auto mt-2 w-[min(92%,565px)] px-4 text-center sm:mt-4 sm:px-6">
             <div className="bg-white/10 px-3 py-2 backdrop-blur-[3px] sm:px-4 sm:py-2.5">
-              <h1 className="type-display font-medium text-white">{t.title}</h1>
+              <h1 className={headingDisplay}>{t.title}</h1>
             </div>
-            <p className="type-lead mt-3 text-white sm:mt-4">{t.subtitle}</p>
+            <p className="text-sm md:text-lead mt-3 text-white sm:mt-4">{t.subtitle}</p>
           </div>
 
           <div className="relative min-h-0 flex-1">
@@ -178,10 +224,8 @@ export function TransitionScreen({
               <ScanOverlay active={scanIn} />
             </div>
 
-            <div className="absolute inset-x-0 bottom-0 z-20 px-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:px-10 sm:pb-8 md:pb-10">
-              <p className="type-lead mx-auto max-w-[692px] text-center text-white">
-                {t.tip}
-              </p>
+            <div className="absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-[#1a3a44] via-[#1a3a44]/80 to-transparent px-6 pt-14 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:px-10 sm:pt-20 sm:pb-8 md:pb-10">
+              <TransitionTips tips={t.tips} step={step} />
 
               {showContinue ? (
                 <button
@@ -194,14 +238,14 @@ export function TransitionScreen({
               ) : (
                 <div className="mt-5 flex items-center justify-center gap-1.5 sm:mt-7 sm:gap-2">
                   {[0, 1, 2].map((i) => {
-                    const active = i <= step;
-                    const isLast = i === 2;
+                    const isCurrent = i === step;
+                    const isDone = i < step;
                     return (
                       <span
                         key={i}
                         className={`h-3 rounded-full border border-white/25 backdrop-blur-[21px] transition-all duration-500 sm:h-4 ${
-                          isLast ? "w-3 sm:w-4" : "w-12 sm:w-16"
-                        } ${active ? "bg-white/90" : "bg-white/35"}`}
+                          isCurrent ? "w-3 sm:w-4" : "w-12 sm:w-16"
+                        } ${isCurrent || isDone ? "bg-white/90" : "bg-white/35"}`}
                       />
                     );
                   })}

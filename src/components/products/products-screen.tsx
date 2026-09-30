@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import { useLocale } from "@/components/i18n/locale-context";
 import { AppHeader } from "@/components/layout/app-header";
+import { headingHeadline } from "@/lib/typography";
 
 const PRODUCTS = [
   {
@@ -90,11 +91,11 @@ export function ProductsScreen() {
 
         <div className="flex min-h-0 flex-1 flex-col items-center overflow-y-auto px-4 sm:px-8">
           <div className="mt-1 bg-white/10 px-4 py-2 text-center backdrop-blur-[3px] sm:mt-2">
-            <h1 className="type-headline font-medium text-white">
+            <h1 className={headingHeadline}>
               {t.title}
             </h1>
           </div>
-          <p className="type-lead mt-3 max-w-[565px] text-center text-white/50 sm:mt-5">
+          <p className="text-base md:text-lead mt-3 max-w-[565px] text-center text-white/50 sm:mt-5">
             {t.subtitle}
           </p>
 

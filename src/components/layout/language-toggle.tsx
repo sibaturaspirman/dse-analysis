@@ -37,7 +37,7 @@ export function LanguageToggle({
             key={option}
             type="button"
             onClick={() => setLocale(option)}
-            className={`type-toggle relative z-10 min-w-[2.6rem] px-2 py-1.5 uppercase leading-none transition sm:min-w-[3.25rem] sm:px-3 sm:py-2 ${
+            className={`text-toggle relative z-10 min-w-[2.6rem] px-2 py-1.5 uppercase leading-none transition sm:min-w-[3.25rem] sm:px-3 sm:py-2 ${
               active
                 ? isLight
                   ? "text-[#4a999e]"

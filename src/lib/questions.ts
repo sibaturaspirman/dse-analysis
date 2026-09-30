@@ -6,6 +6,8 @@ export type ScalpOption = {
   label: Copy;
   /** Short lines for radial label around the dial */
   labelLines: Lines;
+  /** Shown in the dial center after the option is confirmed */
+  description: Copy;
   /** Degrees from top (12 o'clock), clockwise */
   angle: number;
   image: string;
@@ -25,6 +27,10 @@ export const Q1_OPTIONS: ScalpOption[] = [
     id: "cepat-lepek",
     label: { idn: "Cepat Lepek", eng: "Gets oily fast" },
     labelLines: { idn: ["Cepat", "Lepek"], eng: ["Gets oily", "fast"] },
+    description: {
+      idn: "Rambut cepat lepek & kehilangan volume, sering dan kurang dari 1 hari setelah keramas",
+      eng: "Hair gets oily and loses volume, often less than a day after washing",
+    },
     angle: 231,
     image: "/images/q1/cepat-lepek.png",
   },
@@ -32,6 +38,10 @@ export const Q1_OPTIONS: ScalpOption[] = [
     id: "serpihan-berminyak",
     label: { idn: "Serpihan berminyak", eng: "Oily flakes" },
     labelLines: { idn: ["Serpihan", "berminyak"], eng: ["Oily", "flakes"] },
+    description: {
+      idn: "Ada serpihan berminyak, kekuningan, agak lengket menempel",
+      eng: "Oily yellowish flakes that feel slightly sticky on the scalp",
+    },
     angle: 289,
     image: "/images/q1/serpihan-berminyak.png",
   },
@@ -42,6 +52,10 @@ export const Q1_OPTIONS: ScalpOption[] = [
       idn: ["Berminyak", "atau Bau Apek"],
       eng: ["Oily or", "musty smell"],
     },
+    description: {
+      idn: "Kulit kepala terasa berminyak dan ada bau apek yang cukup mengganggu",
+      eng: "Scalp feels oily with a noticeable musty odor",
+    },
     angle: 331,
     image: "/images/q1/berminyak-bau-apek.png",
   },
@@ -49,6 +63,10 @@ export const Q1_OPTIONS: ScalpOption[] = [
     id: "kering-tertarik",
     label: { idn: "Kering atau tertarik", eng: "Dry or tight" },
     labelLines: { idn: ["Kering atau", "tertarik"], eng: ["Dry or", "tight"] },
+    description: {
+      idn: "Kulit kepala terasa kering, ketarik, dan mudah gatal",
+      eng: "Scalp feels dry, tight, and easily itchy",
+    },
     angle: 29,
     image: "/images/q1/kering-tertarik.png",
   },
@@ -59,6 +77,10 @@ export const Q1_OPTIONS: ScalpOption[] = [
       idn: ["Serpihan", "putih kering"],
       eng: ["Dry white", "flakes"],
     },
+    description: {
+      idn: "Serpihan putih kering menempel di kulit kepala dan rambut",
+      eng: "Dry white flakes stick to the scalp and hair",
+    },
     angle: 72,
     image: "/images/q1/serpihan-putih-kering.png",
   },
@@ -66,6 +88,10 @@ export const Q1_OPTIONS: ScalpOption[] = [
     id: "gatal-mengelupas",
     label: { idn: "Gatal & Mengelupas", eng: "Itchy & flaky" },
     labelLines: { idn: ["Gatal &", "Mengelupas"], eng: ["Itchy &", "flaky"] },
+    description: {
+      idn: "Kulit kepala gatal dan ada area yang mengelupas",
+      eng: "Scalp is itchy with flaking or peeling areas",
+    },
     angle: 129,
     image: "/images/q1/gatal-mengelupas.png",
   },
@@ -80,6 +106,10 @@ export const Q2_OPTIONS: ScalpOption[] = [
       idn: ["Gatal saat", "berkeringat"],
       eng: ["Itchy when", "sweating"],
     },
+    description: {
+      idn: "Kulit kepala gatal saat berkeringat atau panas",
+      eng: "Scalp gets itchy when you sweat or feel hot",
+    },
     angle: 0,
     image: "/images/q2/gatal-berkeringat.png",
   },
@@ -87,6 +117,10 @@ export const Q2_OPTIONS: ScalpOption[] = [
     id: "jarang-bereaksi",
     label: { idn: "Jarang bereaksi", eng: "Rarely reacts" },
     labelLines: { idn: ["Jarang", "bereaksi"], eng: ["Rarely", "reacts"] },
+    description: {
+      idn: "Kulit kepala jarang bereaksi terhadap produk atau cuaca",
+      eng: "Scalp rarely reacts to products or weather",
+    },
     angle: 51,
     image: "/images/q2/jarang-bereaksi.png",
   },
@@ -97,6 +131,10 @@ export const Q2_OPTIONS: ScalpOption[] = [
       idn: ["Bebas ganti", "produk"],
       eng: ["Fine switching", "products"],
     },
+    description: {
+      idn: "Kulit kepala toleran saat ganti produk perawatan",
+      eng: "Scalp stays comfortable when switching hair products",
+    },
     angle: 90,
     image: "/images/q2/bebas-ganti-produk.png",
   },
@@ -104,6 +142,10 @@ export const Q2_OPTIONS: ScalpOption[] = [
     id: "tidak-ada-keluhan",
     label: { idn: "Tidak ada keluhan", eng: "No complaints" },
     labelLines: { idn: ["Tidak ada", "keluhan"], eng: ["No", "complaints"] },
+    description: {
+      idn: "Tidak ada keluhan khusus pada kulit kepala",
+      eng: "No particular scalp complaints",
+    },
     angle: 129,
     image: "/images/q2/tidak-ada-keluhan.png",
   },
@@ -111,6 +153,10 @@ export const Q2_OPTIONS: ScalpOption[] = [
     id: "perih-kena-produk",
     label: { idn: "Perih kena produk", eng: "Stings from products" },
     labelLines: { idn: ["Perih kena", "produk"], eng: ["Stings from", "products"] },
+    description: {
+      idn: "Kulit kepala terasa perih atau panas saat pakai produk",
+      eng: "Scalp stings or burns when using certain products",
+    },
     angle: 231,
     image: "/images/q2/perih-kena-produk.png",
   },
@@ -121,6 +167,10 @@ export const Q2_OPTIONS: ScalpOption[] = [
       idn: ["Gatal/merah", "kena panas"],
       eng: ["Itchy/red", "from heat"],
     },
+    description: {
+      idn: "Kulit kepala gatal dan kemerahan saat kena panas atau matahari",
+      eng: "Scalp turns itchy and red from heat or sun exposure",
+    },
     angle: 275,
     image: "/images/q2/gatal-merah-panas.png",
   },
@@ -128,6 +178,10 @@ export const Q2_OPTIONS: ScalpOption[] = [
     id: "jerawat-bruntusan",
     label: { idn: "Jerawat atau bruntusan", eng: "Acne or bumps" },
     labelLines: { idn: ["Jerawat atau", "bruntusan"], eng: ["Acne or", "bumps"] },
+    description: {
+      idn: "Ada jerawat atau bruntusan kecil di area kulit kepala",
+      eng: "Small acne or bumps appear on the scalp",
+    },
     angle: 318,
     image: "/images/q2/jerawat-bruntusan.png",
   },
@@ -139,6 +193,10 @@ export const Q3_OPTIONS: ScalpOption[] = [
     id: "mudah-patah",
     label: { idn: "Mudah patah", eng: "Breaks easily" },
     labelLines: { idn: ["Mudah", "patah"], eng: ["Breaks", "easily"] },
+    description: {
+      idn: "Batang rambut mudah patah saat disisir atau di styling",
+      eng: "Hair strands break easily when combing or styling",
+    },
     angle: 231,
     image: "/images/q3/mudah-patah.png",
   },
@@ -146,6 +204,10 @@ export const Q3_OPTIONS: ScalpOption[] = [
     id: "ujung-bercabang",
     label: { idn: "Ujung bercabang", eng: "Split ends" },
     labelLines: { idn: ["Ujung", "bercabang"], eng: ["Split", "ends"] },
+    description: {
+      idn: "Ujung rambut bercabang dan terlihat rusak",
+      eng: "Hair ends are split and look damaged",
+    },
     angle: 289,
     image: "/images/q3/ujung-bercabang.png",
   },
@@ -153,6 +215,10 @@ export const Q3_OPTIONS: ScalpOption[] = [
     id: "kasar-kering",
     label: { idn: "Kasar & kering", eng: "Rough & dry" },
     labelLines: { idn: ["Kasar &", "kering"], eng: ["Rough &", "dry"] },
+    description: {
+      idn: "Tekstur rambut kasar, kering, dan kurang lembut",
+      eng: "Hair feels rough, dry, and lacks softness",
+    },
     angle: 331,
     image: "/images/q3/kasar-kering.png",
   },
@@ -160,6 +226,10 @@ export const Q3_OPTIONS: ScalpOption[] = [
     id: "kusam-mengembang",
     label: { idn: "Kusam & mengembang", eng: "Dull & frizzy" },
     labelLines: { idn: ["Kusam &", "mengembang"], eng: ["Dull &", "frizzy"] },
+    description: {
+      idn: "Rambut terlihat kusam dan cenderung mengembang",
+      eng: "Hair looks dull and tends to frizz",
+    },
     angle: 29,
     image: "/images/q3/kusam-mengembang.png",
   },
@@ -170,6 +240,10 @@ export const Q3_OPTIONS: ScalpOption[] = [
       idn: ["Kusut &", "sulit disisir"],
       eng: ["Tangled &", "hard to comb"],
     },
+    description: {
+      idn: "Rambut mudah kusut dan sulit disisir",
+      eng: "Hair tangles easily and is hard to comb through",
+    },
     angle: 72,
     image: "/images/q3/kusut-sulit-disisir.png",
   },
@@ -177,6 +251,10 @@ export const Q3_OPTIONS: ScalpOption[] = [
     id: "halus-berkilau",
     label: { idn: "Halus & berkilau", eng: "Smooth & shiny" },
     labelLines: { idn: ["Halus &", "berkilau"], eng: ["Smooth &", "shiny"] },
+    description: {
+      idn: "Batang rambut halus, lembut, dan berkilau",
+      eng: "Hair shaft is smooth, soft, and shiny",
+    },
     angle: 129,
     image: "/images/q3/halus-berkilau.png",
   },
@@ -188,6 +266,10 @@ export const Q4_OPTIONS: ScalpOption[] = [
     id: "sangat-tipis",
     label: { idn: "Rambut sangat tipis", eng: "Very thin hair" },
     labelLines: { idn: ["Rambut", "sangat tipis"], eng: ["Very", "thin hair"] },
+    description: {
+      idn: "Rambut terlihat sangat tipis dan kulit kepala mudah terlihat",
+      eng: "Hair looks very thin with scalp easily visible",
+    },
     angle: 45,
     image: "/images/q4/sangat-tipis.png",
   },
@@ -198,6 +280,10 @@ export const Q4_OPTIONS: ScalpOption[] = [
       idn: ["Tipis dan", "kurang volume"],
       eng: ["Thin,", "low volume"],
     },
+    description: {
+      idn: "Rambut tipis dengan volume yang kurang dan terlihat lepek",
+      eng: "Thin hair with low volume that falls flat",
+    },
     angle: 135,
     image: "/images/q4/tipis-kurang-volume.png",
   },
@@ -205,6 +291,10 @@ export const Q4_OPTIONS: ScalpOption[] = [
     id: "cukup-tebal",
     label: { idn: "Cukup tebal", eng: "Fairly thick" },
     labelLines: { idn: ["Cukup", "tebal"], eng: ["Fairly", "thick"] },
+    description: {
+      idn: "Kerapatan rambut cukup tebal dan terlihat padat",
+      eng: "Hair density is fairly thick and looks full enough",
+    },
     angle: 225,
     image: "/images/q4/cukup-tebal.png",
   },
@@ -214,6 +304,10 @@ export const Q4_OPTIONS: ScalpOption[] = [
     labelLines: {
       idn: ["Tebal, penuh,", "banyak volume"],
       eng: ["Thick, full,", "lots of volume"],
+    },
+    description: {
+      idn: "Rambut tebal, penuh, dan punya volume yang banyak",
+      eng: "Hair is thick, full, and has plenty of volume",
     },
     angle: 315,
     image: "/images/q4/tebal-penuh.png",
