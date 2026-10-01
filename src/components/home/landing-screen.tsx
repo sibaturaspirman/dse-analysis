@@ -8,12 +8,12 @@ import { ScanOverlay } from "@/components/shared/scan-overlay";
 
 const COPY = {
   idn: {
-    developed: "Dikembangkan bersama\nDermatologist & Global Trikologist",
+    developed: "Dikembangkan bersama\nDermatologist & Global Trichologist",
     headline: "Kenali scalp-mu lebih dalam.",
     cta: "Start scalp analysis",
   },
   eng: {
-    developed: "Developed with\nDermatologist & Global Trikologist",
+    developed: "Developed with\nDermatologist & Global Trichologist",
     headline: "Know your scalp deeper.",
     cta: "Start scalp analysis",
   },
